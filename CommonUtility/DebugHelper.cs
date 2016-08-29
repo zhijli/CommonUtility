@@ -38,5 +38,21 @@ namespace Kid.CommonUtility
                 return sw.ToString();
             }
         }
+
+        public static string DebugInfo<T>(this T obj, bool detail)
+        {
+            if (!detail)
+            {
+                _serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                _serializer.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
+                _serializer.TypeNameHandling     = TypeNameHandling.None;
+            }
+            using (var sw = new StringWriter())
+            using (var writer = new JsonTextWriter(sw))
+            {
+                _serializer.Serialize(writer, obj);
+                return sw.ToString();
+            }
+        }
     }
 }
