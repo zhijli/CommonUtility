@@ -10,11 +10,11 @@ namespace Kid.CommonUtility
     using System.Text;
     using System.Threading.Tasks;
 
-    public static class DebugHelper
+    public static class Test
     {
         private static JsonSerializer _serializer;
 
-        static DebugHelper()
+        static Test()
         {
             _serializer = new JsonSerializer
             {
@@ -29,42 +29,12 @@ namespace Kid.CommonUtility
             _serializer.Error += (ser, err) => err.ErrorContext.Handled = true;
         }
 
-        public static string DebugInfo<T>(this T obj)
+        public static string DebugInfo1<T>(this T obj)
         {
-            using (var sw = new StringWriter())
-            using (var writer = new JsonTextWriter(sw))
-            {
-                _serializer.Serialize(writer, obj);
-                return sw.ToString();
-            }
-        }
+            StringBuilder sb = new StringBuilder();
+            StringWriter sw = new StringWriter(sb);
 
-        public static string DebugInfo<T>(this T obj, bool detail)
-        {
-            if (!detail)
-            {
-                _serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                _serializer.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
-                _serializer.TypeNameHandling = TypeNameHandling.None;
-            }
-            using (var sw = new StringWriter())
-            using (var writer = new JsonTextWriter(sw))
-            {
-                _serializer.Serialize(writer, obj);
-                return sw.ToString();
-            }
-        }
-
-        public static string DebugInfoTest<T>(this T obj, bool detail)
-        {
-            if (!detail)
-            {
-                _serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                _serializer.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
-                _serializer.TypeNameHandling = TypeNameHandling.None;
-            }
-            using (var sw = new StringWriter())
-            using (var writer = new JsonTextWriter(sw))
+            using (JsonWriter writer = new JsonTextWriter(sw))
             {
                 writer.Formatting = Formatting.Indented;
 
@@ -82,6 +52,24 @@ namespace Kid.CommonUtility
                 writer.WriteEnd();
                 writer.WriteEndObject();
 
+                return writer.ToString();
+            }
+
+            
+        }
+
+        public static string DebugInfo<T>(this T obj, bool detail)
+        {
+            if (!detail)
+            {
+                _serializer.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                _serializer.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
+                _serializer.TypeNameHandling = TypeNameHandling.None;
+            }
+            using (var sw = new StringWriter())
+            using (var writer = new JsonTextWriter(sw))
+            {
+                _serializer.Serialize(writer, obj);
                 return sw.ToString();
             }
         }

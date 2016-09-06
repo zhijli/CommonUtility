@@ -33,5 +33,11 @@ namespace CommonUtilityTest
 
             Console.Write(method.DebugInfo());
         }
+
+        [TestMethod]
+        public void DebugInfoSimpleTest1()
+        {
+          Console.Write(AppDomain.CurrentDomain.DebugInfoTest(false));
+        }
     }
 }

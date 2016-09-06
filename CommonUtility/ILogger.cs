@@ -10,7 +10,11 @@ namespace CommonUtility
 {
     public interface ILogger
     {
+        string LoggerName { get; set; }
+
         void LogInfo(string message);
+
+        void LogMessage(string message);
 
         void LogVerbose(string message);
 
