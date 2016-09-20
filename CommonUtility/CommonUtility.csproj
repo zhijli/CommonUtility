@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbLogger.cs" />
     <Compile Include="Log4Net.cs" />
     <Compile Include="EventLogger.cs" />
     <Compile Include="ILogger.cs" />
