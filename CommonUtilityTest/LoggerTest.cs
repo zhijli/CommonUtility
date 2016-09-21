@@ -23,7 +23,7 @@ namespace CommonUtilityTest
 
         private void MyFunc()
         {
-            LoggerManager.Init("LoggerTest");
+            LoggerManager.Init("TestConsole");
             LoggerManager.LogInfo("hello");
         }
     }
