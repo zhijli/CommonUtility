@@ -23,15 +23,15 @@ namespace CommonUtility
                ex => EventLog.WriteEntry("Application", string.Format("Add TraceLogger {0} failed with exception:{1}{2}", Environment.NewLine, logName, ex), EventLogEntryType.Error)
            );
 
-            TryExecute(
-                () => AddLogger(new Log4Net(logName)),
-                ex => EventLog.WriteEntry("Application", string.Format("Add Log4Net {0} failed with exception:{1}{2}", Environment.NewLine, logName, ex), EventLogEntryType.Error)
-            );
+            //TryExecute(
+            //    () => AddLogger(new Log4Net(logName)),
+            //    ex => EventLog.WriteEntry("Application", string.Format("Add Log4Net {0} failed with exception:{1}{2}", Environment.NewLine, logName, ex), EventLogEntryType.Error)
+            //);
 
-            TryExecute(
-                () => AddLogger(new DbLogger()),
-                ex => EventLog.WriteEntry("Application", string.Format("Add DbLogger {0} failed with exception:{1}{2}", Environment.NewLine, logName, ex), EventLogEntryType.Error)
-            );
+            //TryExecute(
+            //    () => AddLogger(new DbLogger()),
+            //    ex => EventLog.WriteEntry("Application", string.Format("Add DbLogger {0} failed with exception:{1}{2}", Environment.NewLine, logName, ex), EventLogEntryType.Error)
+            //);
 
             //TryExecute(
             //    () => AddLogger(new TraceSource(logName)),
