@@ -48,6 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructure\List\CircularLinkedList.cs" />
+    <Compile Include="DataStructure\List\DoublyLinkedList.cs" />
+    <Compile Include="DataStructure\List\Node.cs" />
+    <Compile Include="DataStructure\List\Queue.cs" />
+    <Compile Include="DataStructure\Tree\BinaryTree.cs" />
     <Compile Include="Logger\DbLogger.cs" />
     <Compile Include="Logger\Log4Net.cs" />
     <Compile Include="Logger\EventLogger.cs" />
@@ -61,6 +66,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Algorithms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

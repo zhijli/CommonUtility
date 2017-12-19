@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DataStructure\Tree\BinaryTreeTest.cs" />
     <Compile Include="Logger\EventLoggerTest.cs" />
     <Compile Include="Logger\LoggerTest.cs" />
     <Compile Include="Logger\DebugHelperTest.cs" />
