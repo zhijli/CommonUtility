@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CommonUtility
+﻿namespace ZhijieLi.CommonUtility.Logger
 {
+    using System;
+    using System.Diagnostics;
+
     /// <summary>
     /// Adaptor for Eventlog -> ILogger
     /// </summary>
@@ -18,8 +12,8 @@ namespace CommonUtility
 
         public EventLogger(string loggerName)
         {
-            LoggerName = loggerName;
-            Init();
+            this.LoggerName = loggerName;
+            this.Init();
         }
 
         public string LoggerName { get; set; }
@@ -28,21 +22,21 @@ namespace CommonUtility
         {
             try
             {
-                _eventLog = new EventLog();
-                _eventLog.BeginInit();
+                this._eventLog = new EventLog();
+                this._eventLog.BeginInit();
 
                 //An event log source should not be created and immediately used.
                 //There is a latency time to enable the source, it should be created
                 //prior to executing the application that uses the source.
                 //Execute this sample a second time to use the new source.
-                if (!EventLog.Exists(LoggerName))
+                if (!EventLog.Exists(this.LoggerName))
                 {
                     //Need Admin credencial
-                    EventLog.CreateEventSource(LoggerName, LoggerName);
+                    EventLog.CreateEventSource(this.LoggerName, this.LoggerName);
                 }
 
-                _eventLog.Source = LoggerName;
-                _eventLog.EndInit();
+                this._eventLog.Source = this.LoggerName;
+                this._eventLog.EndInit();
             }
             catch (Exception ex)
             {
@@ -52,7 +46,7 @@ namespace CommonUtility
 
         public void LogInfo(string message)
         {
-            _eventLog.WriteEntry(message,EventLogEntryType.Information);
+            this._eventLog.WriteEntry(message,EventLogEntryType.Information);
         }
 
         public void LogMessage(string message)

@@ -7,8 +7,8 @@
     <ProjectGuid>{1BA74A7D-9B40-48E4-A408-030A8C5CE259}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonUtility</RootNamespace>
-    <AssemblyName>CommonUtility</AssemblyName>
+    <RootNamespace>ZhijieLi.CommonUtility</RootNamespace>
+    <AssemblyName>ZhijieLi.CommonUtility</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -48,15 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbLogger.cs" />
-    <Compile Include="Log4Net.cs" />
-    <Compile Include="EventLogger.cs" />
-    <Compile Include="ILogger.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="DebugHelper.cs" />
-    <Compile Include="LoggerManager.cs" />
+    <Compile Include="Logger\DbLogger.cs" />
+    <Compile Include="Logger\Log4Net.cs" />
+    <Compile Include="Logger\EventLogger.cs" />
+    <Compile Include="Logger\ILogger.cs" />
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="Logger\DebugHelper.cs" />
+    <Compile Include="Logger\LoggerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TraceLogger.cs" />
+    <Compile Include="Logger\TraceLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

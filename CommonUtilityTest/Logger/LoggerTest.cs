@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using CommonUtility;
 
 namespace CommonUtilityTest
 {
@@ -8,8 +7,8 @@ namespace CommonUtilityTest
     using System.Reflection;
     using System.Runtime.Remoting.Contexts;
     using System.Runtime.Remoting.Messaging;
-    using Kid.CommonUtility;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ZhijieLi.CommonUtility.Logger;
 
     [TestClass]
     public class LoggerTest

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using CommonUtility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CommonUtilityTest
 {
+    using ZhijieLi.CommonUtility.Logger;
+
     /// <summary>
     /// Summary description for EventLoggerTest
     /// </summary>

@@ -1,10 +1,10 @@
 ﻿using System;
-using CommonUtility;
-using Kid.CommonUtility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CommonUtilityTest
 {
+    using ZhijieLi.CommonUtility.Logger;
+
     [TestClass]
     public class DbLoggerTest
     {

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CommonUtility
+﻿namespace ZhijieLi.CommonUtility.Logger
 {
+    using System;
+
     public interface ILogger
     {
         string LoggerName { get; set; }

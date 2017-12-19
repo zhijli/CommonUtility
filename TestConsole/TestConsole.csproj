@@ -7,8 +7,8 @@
     <ProjectGuid>{4ED12407-2B0F-45F2-9851-A223DE9ACE1F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestConsole</RootNamespace>
-    <AssemblyName>TestConsole</AssemblyName>
+    <RootNamespace>ZhijieLi.TestConsole</RootNamespace>
+    <AssemblyName>ZhijieLi.TestConsole</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

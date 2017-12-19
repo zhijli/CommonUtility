@@ -6,8 +6,8 @@
     <ProjectGuid>{004DB0DB-A04F-46DB-823C-A4A4247C1B47}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommonUtilityTest</RootNamespace>
-    <AssemblyName>CommonUtilityTest</AssemblyName>
+    <RootNamespace>ZhijieLi.CommonUtilityTest</RootNamespace>
+    <AssemblyName>ZhijieLi.CommonUtilityTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -53,17 +53,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EventLoggerTest.cs" />
-    <Compile Include="LoggerTest.cs" />
-    <Compile Include="DebugHelperTest.cs" />
+    <Compile Include="Logger\EventLoggerTest.cs" />
+    <Compile Include="Logger\LoggerTest.cs" />
+    <Compile Include="Logger\DebugHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DbLoggerTest.cs" />
+    <Compile Include="Logger\DbLoggerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonUtility\CommonUtility.csproj">
       <Project>{1ba74a7d-9b40-48e4-a408-030a8c5ce259}</Project>
       <Name>CommonUtility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestSample\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

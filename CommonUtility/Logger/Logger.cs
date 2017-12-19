@@ -1,15 +1,7 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Runtime.Serialization.Formatters;
-using Newtonsoft.Json;
-
-namespace Kid.CommonUtility
+﻿namespace ZhijieLi.CommonUtility.Logger
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Diagnostics;
 
     public static class Logger
     {

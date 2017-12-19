@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CommonUtility
+﻿namespace ZhijieLi.CommonUtility.Logger
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
     public static class LoggerManager
     {
         public static void Init(string logName)

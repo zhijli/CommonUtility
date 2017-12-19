@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using log4net;
-
-namespace CommonUtility
+﻿namespace ZhijieLi.CommonUtility.Logger
 {
-    public class Log4Net : ILogger
+    using System;
+    using System.Diagnostics;
+
+    public class TraceLogger : ILogger
     {
-        public Log4Net(string loggerName)
+        public TraceLogger(string loggerName)
         {
-            LoggerName = loggerName;
-            Init();
+            this.LoggerName = loggerName;
+            this.Init();
         }
 
         public string LoggerName { get; set; }
-        
-        public ILog Logger { get; set; }
+
+        private TraceSource _traceSource { get; set; }
+
+        private int _id { get; set; }
+
         private void Init()
         {
-            Logger = LogManager.GetLogger(LoggerName);
+            this._traceSource = new TraceSource(this.LoggerName);
+            this._id = 0;
         }
 
         public void LogInfo(string message)
         {
-           Logger.Info(message);
+            this._traceSource.TraceEvent(TraceEventType.Information, this._id++ , message);
         }
 
         public void LogMessage(string message)
