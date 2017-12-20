@@ -36,6 +36,15 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
             Assert.AreEqual("7 4 8 10 9 5 2 6 3 1 ", output.ToString());
         }
 
+        [TestMethod]
+        public void BreadthTraverseTest()
+        {
+            var tree = this.CreateBinaryTree();
+            var output = new StringBuilder();
+            tree.BreadthTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("1 2 3 4 5 6 7 8 9 10 ", output.ToString());
+        }
+
         private BinaryTree<int> CreateBinaryTree()
         {
             //         1

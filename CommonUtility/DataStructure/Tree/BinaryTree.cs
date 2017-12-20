@@ -84,7 +84,6 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 }
 
                 current = stack.Pop();
-                rightReturn = false;
                 if (current.Right == null)
                 {
                     action(current.data);
@@ -94,12 +93,14 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                         current = stack.Pop();
                         if (current == null)
                         {
+                            //Return from Right child
+                            rightReturn = true;
                             current = stack.Pop();
                             action(current.data);
-                            rightReturn = true;
                         }
                         else
                         {
+                            //Return from Left child
                             rightReturn = false;    
                             if (current.Right != null)
                             {
@@ -126,7 +127,20 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         //Breadth First Traverses
         public void BreadthTraverse(Action<T> action)
         {
+            var current = Root;
+            var queue = new Queue<BinaryTreeNode<T>>();
+            queue.Enqueue(current);
 
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+                if (current != null)
+                {
+                    action(current.data);
+                    queue.Enqueue(current.Left);
+                    queue.Enqueue(current.Right);
+                }
+            }
         }
     }
 
