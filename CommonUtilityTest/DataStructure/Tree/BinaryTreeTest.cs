@@ -45,6 +45,23 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
             Assert.AreEqual("1 2 3 4 5 6 7 8 9 10 ", output.ToString());
         }
 
+        [TestMethod]
+        public void TraverseAtTreeLevel_Valid()
+        {
+            var tree = this.CreateBinaryTree();
+            var output = new StringBuilder();
+            tree.TraverseAtTreeLevel(data => output.Append(data + " "), 3);
+            Assert.AreEqual("4 5 6 ", output.ToString());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TraverseAtTreeLevel_Exceed_tree_height()
+        {
+            var tree = this.CreateBinaryTree();
+            var output = new StringBuilder();
+            tree.TraverseAtTreeLevel(data => output.Append(data + " "), 6);
+        }
         private BinaryTree<int> CreateBinaryTree()
         {
             //         1
