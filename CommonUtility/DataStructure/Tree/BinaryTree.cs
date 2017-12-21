@@ -143,63 +143,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             }
         }
 
-        /// <summary>
-        /// Traverse all nodes at a given level
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public void TraverseAtTreeLevel(Action<T> action, int level)
-        {
-            var current = Root;
-            var queue = new Queue<BinaryTreeNode<T>>();
-
-            if (current == null)
-                return;
-
-            int currentLevel = 0;
-
-
-            //Use null as a flag of new level
-            queue.Enqueue(null);
-            queue.Enqueue(current);
-            
-            while (queue.Count > 0)
-            {
-                current = queue.Dequeue();
-                if (current == null)
-                {
-                    if (currentLevel == level)
-                    {
-                        break;
-                    }
-                    currentLevel++;
-                    if (queue.Count > 0)
-                    {
-                        current = queue.Dequeue();
-                        queue.Enqueue(null);
-                    }
-                    else
-                    {
-                        throw new ArgumentOutOfRangeException
-                         ($"The level parameter is lager than the tree's height. The height of tree:{currentLevel-1}, level:{level}.") ;
-                    }
-                }
-
-                if (currentLevel == level)
-                {
-                    action(current.data);
-                }
-
-                if (current.Left != null)
-                {
-                    queue.Enqueue(current.Left);
-                }
-                if (current.Right != null)
-                {
-                    queue.Enqueue(current.Right);
-                }
-            }
-        }
+      
     }
 
     public class BinaryTreeNode<T>

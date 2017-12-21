@@ -10,7 +10,7 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
     public class BinaryTreeTest
     {
         [TestMethod]
-        public void PreOrderTest()
+        public void PreOrder_Traverser_Test()
         {
             var tree = this.CreateBinaryTree();
             var output = new StringBuilder();
@@ -19,7 +19,7 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
         }
 
         [TestMethod]
-        public void InOrderTest()
+        public void InOrder_Traverser_Test()
         {
             var tree = this.CreateBinaryTree();
             var output = new StringBuilder();
@@ -28,7 +28,7 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
         }
 
         [TestMethod]
-        public void PostOrderTest()
+        public void PostOrder_Traverser_Test()
         {
             var tree = this.CreateBinaryTree();
             var output = new StringBuilder();
@@ -37,31 +37,14 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
         }
 
         [TestMethod]
-        public void BreadthTraverseTest()
+        public void Breadth_Traverse_Test()
         {
             var tree = this.CreateBinaryTree();
             var output = new StringBuilder();
             tree.BreadthTraverse(data => output.Append(data + " "));
             Assert.AreEqual("1 2 3 4 5 6 7 8 9 10 ", output.ToString());
         }
-
-        [TestMethod]
-        public void TraverseAtTreeLevel_Valid()
-        {
-            var tree = this.CreateBinaryTree();
-            var output = new StringBuilder();
-            tree.TraverseAtTreeLevel(data => output.Append(data + " "), 3);
-            Assert.AreEqual("4 5 6 ", output.ToString());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TraverseAtTreeLevel_Exceed_tree_height()
-        {
-            var tree = this.CreateBinaryTree();
-            var output = new StringBuilder();
-            tree.TraverseAtTreeLevel(data => output.Append(data + " "), 6);
-        }
+        
         private BinaryTree<int> CreateBinaryTree()
         {
             //         1

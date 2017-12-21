@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUtilityTest", "Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{4ED12407-2B0F-45F2-9851-A223DE9ACE1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustDoIt", "JustDoIt\JustDoIt.csproj", "{D80A21EE-DE3D-481F-86D4-80F561F686EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4ED12407-2B0F-45F2-9851-A223DE9ACE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ED12407-2B0F-45F2-9851-A223DE9ACE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ED12407-2B0F-45F2-9851-A223DE9ACE1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D80A21EE-DE3D-481F-86D4-80F561F686EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D80A21EE-DE3D-481F-86D4-80F561F686EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D80A21EE-DE3D-481F-86D4-80F561F686EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D80A21EE-DE3D-481F-86D4-80F561F686EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
