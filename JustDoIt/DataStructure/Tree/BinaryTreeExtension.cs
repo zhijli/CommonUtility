@@ -25,7 +25,7 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
         {
             if (tree == null)
                 return;
-            
+
             PreOrderTraverse_recursion_imp<T>(tree.Root, action);
         }
 
@@ -94,7 +94,7 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
                 return;
 
             var tuple = Tuple.Create(tree.Root, 0);
-           
+
             var queue = new Queue<Tuple<BinaryTreeNode<T>, int>>();
             queue.Enqueue(tuple);
             var list = new List<Tuple<BinaryTreeNode<T>, int>>();
@@ -125,13 +125,13 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
         private static List<BinaryTreeNode<T>> CountSort<T>(List<Tuple<BinaryTreeNode<T>, int>> list)
         {
             var count = list.Count;
-            var a = new List<int>(2*count);
+            var a = new List<int>(2 * count);
             var result = new List<BinaryTreeNode<T>>(count);
 
             for (int i = 0; i < 2 * count; i++)
-                a.Insert(i,0);
+                a.Insert(i, 0);
 
-            for (int i = 0; i <  count; i++)
+            for (int i = 0; i < count; i++)
                 result.Insert(i, null);
 
             foreach (var tuple in list)
@@ -153,12 +153,72 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
             return result;
         }
 
+        public static void BoundaryTraverse<T>(this BinaryTree<T> tree, Action<T> action)
+        {
+            if (tree == null || tree.Root == null)
+            {
+                return;
+            }
+
+            bool isLeftTop = true;
+            bool isRightTop = true;
+            var current = Tuple.Create(tree.Root, isLeftTop, isRightTop);
+            var stack = new Stack<Tuple<BinaryTreeNode<T>, bool, bool>>();
+            var actionQueue = new Queue<T>();
+            var actionStack = new Stack<T>();
+
+            while (current.Item1 != null || stack.Count > 0)
+            {
+                while (current.Item1 != null)
+                {
+                    if (current.Item2 == true || (current.Item1.Left == null && current.Item1.Right == null))
+                    {
+                        //Use queue for leftTop or child node
+                        actionQueue.Enqueue(current.Item1.data);
+                    }
+                    else if (current.Item3 == true)
+                    {
+                        //Use stack for rightTop node
+                        actionStack.Push(current.Item1.data);
+                    }
+
+                    stack.Push(current);
+                    current = Tuple.Create(current.Item1.Left, current.Item2, false);
+                }
+
+                current = stack.Pop();
+                while (current.Item1.Right == null && stack.Count > 0)
+                {
+                    current = stack.Pop();
+                }
+
+                current = Tuple.Create(current.Item1.Right, false, current.Item3);
+            }
+
+            //Execute action for all boundary node
+            while (actionQueue.Count > 0)
+            {
+                var data = actionQueue.Dequeue();
+                action(data);
+            }
+            while (actionStack.Count > 0)
+            {
+                var data = actionStack.Pop();
+                action(data);
+            }
+        }
+
+        private static bool IsBoundary<T>(this Tuple<BinaryTreeNode<T>, bool, bool> tuple)
+        {
+            return tuple.Item2 || tuple.Item3 || (tuple.Item1.Left == null && tuple.Item1.Right == null);
+        }
+
         /// <summary>
         /// Traverse all nodes at a given level
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static void TraverseAtTreeLevel<T>(this BinaryTree<T>  tree,  Action<T> action, int level)
+        public static void TraverseAtTreeLevel<T>(this BinaryTree<T> tree, Action<T> action, int level)
         {
             var current = tree.Root;
             var queue = new Queue<BinaryTreeNode<T>>();
