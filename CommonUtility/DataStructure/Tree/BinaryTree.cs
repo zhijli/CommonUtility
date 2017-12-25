@@ -15,8 +15,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
     public class BinaryTree<T>
     {
         public BinaryTreeNode<T> Root { get; set; }
-
-
+        
         //Depth First Traverses- PreOrder
         public void PreOrderTraverse(Action<T> action)
         {
@@ -143,7 +142,11 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             }
         }
 
-      
+        public  bool Equals(BinaryTree<T> obj)
+        {
+            return base.Equals(obj);
+        }
+        
     }
 
     public class BinaryTreeNode<T>

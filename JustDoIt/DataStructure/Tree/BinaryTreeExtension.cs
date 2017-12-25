@@ -153,6 +153,12 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
             return result;
         }
 
+        /// <summary>
+        /// Boundary Traverse -- O(n)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="tree"></param>
+        /// <param name="action"></param>
         public static void BoundaryTraverse<T>(this BinaryTree<T> tree, Action<T> action)
         {
             if (tree == null || tree.Root == null)
@@ -250,8 +256,8 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
                     }
                     else
                     {
-                        throw new ArgumentOutOfRangeException
-                         ($"The level parameter is lager than the tree's height. The height of tree:{currentLevel - 1}, level:{level}.");
+                        throw new ArgumentOutOfRangeException(
+                            $"The level parameter is lager than the tree's height. The height of tree:{currentLevel - 1}, level:{level}.");
                     }
                 }
 
@@ -270,5 +276,121 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
                 }
             }
         }
+
+        /// <summary>
+        /// Create a binary tree according to its preOrder and inOrder traverse list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="preOrder"></param>
+        /// <param name="inOrder"></param>
+        /// <returns></returns>
+        public static BinaryTree<T> ConstructBinaryTreeWithPreOrderAndInOrder<T>(List<T> preOrder, List<T> inOrder)
+        {
+            var tree = new BinaryTree<T>()
+            {
+                Root = new BinaryTreeNode<T>()
+            };
+
+            ConstructBinaryTreeWithPreOrderAndInOrder_imp(
+                tree.Root,
+                preOrder,
+                0,
+                preOrder.Count - 1,
+                inOrder,
+                0,
+                inOrder.Count - 1);
+            return tree;
+        }
+
+        private static void ConstructBinaryTreeWithPreOrderAndInOrder_imp<T>(
+            BinaryTreeNode<T> node,
+            List<T> preOrder,
+            int preStart,
+            int preEnd,
+            List<T> inOrder,
+            int inStart,
+            int inEnd)
+        {
+            if (node == null || preStart > preEnd || inStart > inEnd)
+                return;
+
+            node.data = preOrder[preStart];
+
+            if (preStart == preEnd || inStart == inEnd)
+                return;
+
+            var index = inOrder.FindIndex(d => d.Equals(node.data));
+
+            int leftChildIndex = preStart + 1;
+            int rightChildIndex = preEnd + 1;
+            bool hasLeftChild = false;
+            bool hasRightChild = false;
+            bool findRight = false;
+            for (int j = inStart; j <= inEnd; j++)
+            {
+                if (Equals(inOrder[j], preOrder[preStart + 1]))
+                {
+                    if (j < index)
+                    {
+                        node.Left = new BinaryTreeNode<T> { data = inOrder[j] };
+                        leftChildIndex = preStart + 1;
+                        hasLeftChild = true;
+                        break;
+                    }
+                    else
+                    {
+                        node.Right = new BinaryTreeNode<T> { data = inOrder[j] };
+                        rightChildIndex = preStart + 1;
+                        hasRightChild = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasLeftChild)
+            {
+                for (int i = preStart + 2; i <= preEnd && !findRight; i++)
+                {
+                    for (int k = index + 1; k <= inEnd; k++)
+                    {
+                        if (Equals(inOrder[k], preOrder[i]))
+                        {
+                            node.Right = new BinaryTreeNode<T> { data = inOrder[k] };
+                            rightChildIndex = i;
+                            hasRightChild = true;
+                            findRight = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (hasLeftChild == true)
+            {
+                ConstructBinaryTreeWithPreOrderAndInOrder_imp(
+                    node.Left,
+                    preOrder,
+                    leftChildIndex,
+                    rightChildIndex - 1,
+                    inOrder,
+                    inStart,
+                    index - 1);
+            }
+
+            if (hasRightChild == true)
+            {
+                ConstructBinaryTreeWithPreOrderAndInOrder_imp(
+                    node.Right,
+                    preOrder,
+                    rightChildIndex,
+                    preEnd,
+                    inOrder,
+                    index + 1,
+                    inEnd);
+            }
+        }
+
     }
+
+
 }

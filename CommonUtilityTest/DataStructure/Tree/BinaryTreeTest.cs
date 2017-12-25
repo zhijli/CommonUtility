@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
 {
+    using System.Collections.Generic;
     using System.Text;
     using ZhijieLi.CommonUtility.DataStructure.Tree;
 
@@ -44,7 +45,7 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
             tree.BreadthTraverse(data => output.Append(data + " "));
             Assert.AreEqual("1 2 3 4 5 6 7 8 9 10 ", output.ToString());
         }
-        
+
         private BinaryTree<int> CreateBinaryTree()
         {
             //         1
@@ -54,7 +55,7 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
             //           10
             var tree = new BinaryTree<int>();
             tree.Root = new BinaryTreeNode<int> { data = 1 };
-            tree.Root.Left = new BinaryTreeNode < int > { data = 2};
+            tree.Root.Left = new BinaryTreeNode<int> { data = 2 };
             tree.Root.Right = new BinaryTreeNode<int> { data = 3 };
             tree.Root.Left.Left = new BinaryTreeNode<int> { data = 4 };
             tree.Root.Left.Right = new BinaryTreeNode<int> { data = 5 };

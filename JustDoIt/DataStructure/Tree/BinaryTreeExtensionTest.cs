@@ -7,6 +7,7 @@
 namespace ZhijieLi.JustDoIt.DataStructure.Tree
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using ZhijieLi.CommonUtility.DataStructure.Tree;
@@ -76,6 +77,23 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
             var output = new StringBuilder();
             tree.BoundaryTraverse(data => output.Append(data + " "));
             Assert.AreEqual("1 2 4 7 8 10 6 3 ", output.ToString());
+        }
+
+        [TestMethod]
+        public void Construct_BinaryTree_With_PreOrder_And_InOrder_Test()
+        {
+            var preOrder = new List<int>() { 1, 2, 4, 7, 5, 8, 9, 10, 3, 6 };
+            var inOrder = new List<int>() { 7, 4, 2, 8, 5, 9, 10, 1, 3, 6 };
+
+            var expected = this.CreateBinaryTree();
+            var tree = BinaryTreeExtension.ConstructBinaryTreeWithPreOrderAndInOrder(preOrder, inOrder);
+
+            var output = new StringBuilder();
+            tree.PreOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("1 2 4 7 5 8 9 10 3 6 ", output.ToString());
+            output.Clear();
+            tree.InOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("7 4 2 8 5 9 10 1 3 6 ", output.ToString());
         }
 
         private BinaryTree<int> CreateBinaryTree()
