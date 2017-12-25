@@ -22,16 +22,16 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             var stack = new Stack<BinaryTreeNode<T>>();
             var current = Root;
 
-            while (current != null || stack.Count > 0)
+            while (current != null)
             {
-                while (current != null)
+                while (current.Left != null)
                 {
                     action(current.data);
                     stack.Push(current);
                     current = current.Left;
                 }
 
-                current = stack.Pop();
+                action(current.data);
                 while (current.Right == null && stack.Count > 0)
                 {
                     current = stack.Pop();
@@ -47,17 +47,15 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             var stack = new Stack<BinaryTreeNode<T>>();
             var current = Root;
 
-            while (current != null || stack.Count > 0)
+            while (current != null)
             {
-                while (current != null)
+                while (current.Left != null)
                 {
                     stack.Push(current);
                     current = current.Left;
                 }
-
-                current = stack.Pop();
+                
                 action(current.data);
-
                 while (current.Right == null && stack.Count > 0)
                 {
                     current = stack.Pop();
