@@ -60,49 +60,32 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         {
             var stack = new Stack<BinaryTreeNode<T>>();
             var current = Root;
-            bool returnFromRightChild = false;
-            while (current != null)
+            
+            while (current != null || stack.Count > 0)
             {
-                while (current.Left != null)
+                while (current != null)
                 {
                     stack.Push(current);
                     current = current.Left;
                 }
 
-                stack.Push(current);
-                while (stack.Count > 0)
+                current = stack.Pop();
+                if (current == null)
                 {
+                    //Return from Richt child
                     current = stack.Pop();
-
-                    if (current == null)
-                    {
-                        //Return from Richt child
-                        current = stack.Pop();
-                        action(current.data);
-                        returnFromRightChild = true;
-                    }
-                    else
-                    {
-                        returnFromRightChild = false;
-                        //Return from Left child
-                        if (current.Right == null)
-                        {
-                            action(current.data);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
+                    action(current.data);
+                    //go back to while loop again
+                    current = null; 
                 }
-
-                if (current.Right != null && returnFromRightChild != true)
+                else
                 {
+                    //Return from Left child
                     stack.Push(current);
-                    stack.Push(null);
+                    //use null as a flag to indicate the next node in stack is return from right child
+                    stack.Push(null);  
+                    current = current.Right;
                 }
-
-                current = current.Right;
             }
         }
 
