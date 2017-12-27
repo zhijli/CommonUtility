@@ -15,29 +15,23 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
     public class BinaryTree<T>
     {
         public BinaryTreeNode<T> Root { get; set; }
-        
+
         //Depth First Traverses- PreOrder
         public void PreOrderTraverse(Action<T> action)
         {
             var stack = new Stack<BinaryTreeNode<T>>();
             var current = Root;
 
-            while (current != null)
+            while (current != null || stack.Count > 0)
             {
-                while (current.Left != null)
+                while (current != null)
                 {
                     action(current.data);
-                    stack.Push(current);
+                    stack.Push(current.Right);
                     current = current.Left;
                 }
 
-                action(current.data);
-                while (current.Right == null && stack.Count > 0)
-                {
-                    current = stack.Pop();
-                }
-
-                current = current.Right;
+                current = stack.Pop();
             }
         }
 
@@ -47,31 +41,6 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             var stack = new Stack<BinaryTreeNode<T>>();
             var current = Root;
 
-            while (current != null)
-            {
-                while (current.Left != null)
-                {
-                    stack.Push(current);
-                    current = current.Left;
-                }
-                
-                action(current.data);
-                while (current.Right == null && stack.Count > 0)
-                {
-                    current = stack.Pop();
-                    action(current.data);
-                }
-
-                current = current.Right;
-            }
-        }
-
-        //Depth First Traverses- PostOrder
-        public void PostOrderTraverse(Action<T> action)
-        {
-            var stack = new Stack<BinaryTreeNode<T>>();
-            var current = Root;
-            bool rightReturn = false;
             while (current != null || stack.Count > 0)
             {
                 while (current != null)
@@ -81,43 +50,59 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 }
 
                 current = stack.Pop();
-                if (current.Right == null)
-                {
-                    action(current.data);
+                action(current.data);
+                current = current.Right;
+            }
+        }
 
-                    while (stack.Count > 0)
+        //Depth First Traverses- PostOrder
+        public void PostOrderTraverse(Action<T> action)
+        {
+            var stack = new Stack<BinaryTreeNode<T>>();
+            var current = Root;
+            bool returnFromRightChild = false;
+            while (current != null)
+            {
+                while (current.Left != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+
+                stack.Push(current);
+                while (stack.Count > 0)
+                {
+                    current = stack.Pop();
+
+                    if (current == null)
                     {
+                        //Return from Richt child
                         current = stack.Pop();
-                        if (current == null)
+                        action(current.data);
+                        returnFromRightChild = true;
+                    }
+                    else
+                    {
+                        returnFromRightChild = false;
+                        //Return from Left child
+                        if (current.Right == null)
                         {
-                            //Return from Right child
-                            rightReturn = true;
-                            current = stack.Pop();
                             action(current.data);
                         }
                         else
                         {
-                            //Return from Left child
-                            rightReturn = false;    
-                            if (current.Right != null)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                action(current.data);
-                            }
+                            break;
                         }
                     }
                 }
 
-                if (current.Right != null && rightReturn == false)
+                if (current.Right != null && returnFromRightChild != true)
                 {
                     stack.Push(current);
                     stack.Push(null);
-                    current = current.Right;
                 }
-                else { break; }
+
+                current = current.Right;
             }
         }
 
@@ -140,11 +125,11 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             }
         }
 
-        public  bool Equals(BinaryTree<T> obj)
+        public bool Equals(BinaryTree<T> obj)
         {
             return base.Equals(obj);
         }
-        
+
     }
 
     public class BinaryTreeNode<T>
