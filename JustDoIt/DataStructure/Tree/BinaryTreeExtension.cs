@@ -154,6 +154,38 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
         }
 
         /// <summary>
+        /// Revert Leve Treaverse
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="tree"></param>
+        /// <param name="action"></param>
+        public static void RevertLevelTraverse<T>(this BinaryTree<T> tree, Action<T> action)
+        {
+            var current = tree.Root;
+            var stack = new Stack<BinaryTreeNode<T>>();
+            var queue = new Queue<BinaryTreeNode<T>>();
+            queue.Enqueue(current);
+
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+
+                if (current != null)
+                {
+                    stack.Push(current);
+                    queue.Enqueue(current.Right);
+                    queue.Enqueue(current.Left);
+                }
+            }
+
+            while (stack.Count > 0)
+            {
+                current = stack.Pop();
+                action(current.data);
+            }
+        }
+
+        /// <summary>
         /// Boundary Traverse -- O(n)
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -214,10 +246,7 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
             }
         }
 
-        private static bool IsBoundary<T>(this Tuple<BinaryTreeNode<T>, bool, bool> tuple)
-        {
-            return tuple.Item2 || tuple.Item3 || (tuple.Item1.Left == null && tuple.Item1.Right == null);
-        }
+
 
         /// <summary>
         /// Traverse all nodes at a given level

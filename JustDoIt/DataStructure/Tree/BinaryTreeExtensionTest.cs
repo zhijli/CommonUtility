@@ -80,6 +80,15 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
         }
 
         [TestMethod]
+        public void Revert_Level_Traverser_Test()
+        {
+            var tree = this.CreateBinaryTree();
+            var output = new StringBuilder();
+            tree.RevertLevelTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("10 7 8 9 4 5 6 2 3 1 ", output.ToString());
+        }
+
+        [TestMethod]
         public void Construct_BinaryTree_With_PreOrder_And_InOrder_Test()
         {
             var preOrder = new List<int>() { 1, 2, 4, 7, 5, 8, 9, 10, 3, 6 };
