@@ -122,6 +122,46 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
             }
         }
 
+        /// <summary>
+        /// DiagonalTraverse -- O(n)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="tree"></param>
+        /// <param name="action"></param>
+        public static void DiagonalTraverse<T>(this BinaryTree<T> tree, Action<T> action)
+        {
+            if (tree == null || tree.Root == null)
+                return;
+
+            var tuple = Tuple.Create(tree.Root, 0);
+
+            var queue = new Queue<Tuple<BinaryTreeNode<T>, int>>();
+            queue.Enqueue(tuple);
+            var list = new List<Tuple<BinaryTreeNode<T>, int>>();
+
+            //use breadth treavers to maintain the vertical order
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                list.Add(current);
+
+                if (current.Item1.Left != null)
+                {
+                    queue.Enqueue(Tuple.Create(current.Item1.Left, current.Item2 + 1));
+                }
+                if (current.Item1.Right != null)
+                {
+                    queue.Enqueue(Tuple.Create(current.Item1.Right, current.Item2));
+                }
+            }
+
+            var result = CountSort(list);
+            foreach (var node in result)
+            {
+                action(node.data);
+            }
+        }
+
         private static List<BinaryTreeNode<T>> CountSort<T>(List<Tuple<BinaryTreeNode<T>, int>> list)
         {
             var count = list.Count;
@@ -245,8 +285,6 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
                 action(data);
             }
         }
-
-
 
         /// <summary>
         /// Traverse all nodes at a given level

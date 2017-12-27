@@ -71,6 +71,15 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
         }
 
         [TestMethod]
+        public void Diagonal_Traverser_Test()
+        {
+            var tree = this.CreateBinaryTree();
+            var output = new StringBuilder();
+            tree.DiagonalTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("1 3 6 2 5 9 10 4 8 7 ", output.ToString());
+        }
+
+        [TestMethod]
         public void Boundary_Traverser_Test()
         {
             var tree = this.CreateBinaryTree();
