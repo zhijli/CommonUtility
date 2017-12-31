@@ -39,6 +39,44 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
         }
 
         /// <summary>
+        /// Binary tree inOrder morris traverse 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="tree"></param>
+        /// <param name="action"></param>
+        public static void InOrderMorrisTraverse<T>(this BinaryTree<T> tree, Action<T> action)
+        {
+            if (tree == null)
+                return;
+
+            var current = tree.Root;
+            while (current != null)
+            {
+                while (current.Left != null)
+                {
+                    var left = current.Left;
+                    while (left.Right != null && left.Right != current)
+                    {
+                        left = left.Right;
+                    }
+                    if (left.Right == null)
+                    {
+                        left.Right = current;
+                        current = current.Left;
+                    }
+                    else
+                    {
+                        left.Right = null;
+                        break;
+                    }                    
+                }
+
+                action(current.data);
+                current = current.Right;
+            }
+        }
+
+        /// <summary>
         /// Recustion version of binary tree inOrder traverse 
         /// </summary>
         /// <typeparam name="T"></typeparam>

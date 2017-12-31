@@ -53,6 +53,15 @@ namespace ZhijieLi.JustDoIt.DataStructure.Tree
         }
 
         [TestMethod]
+        public void InOrder_Morris_Traverser_Test()
+        {
+            var tree = this.CreateBinaryTree();
+            var output = new StringBuilder();
+            tree.InOrderMorrisTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("7 4 2 8 5 9 10 1 3 6 ", output.ToString());
+        }
+
+        [TestMethod]
         public void PostOrder_Traverser_recursion_Test()
         {
             var tree = this.CreateBinaryTree();
