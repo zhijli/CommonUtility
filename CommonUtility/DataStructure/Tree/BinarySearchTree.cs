@@ -254,11 +254,59 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 return;
             }
 
+            var current = _Search(data);
+            if (current != null)
+            {
+                var nodeToDelete = current;
+                if (current != null && current.Left != null && current.Right != null)
+                {
+                    nodeToDelete = _Successor(current);
+                }
 
+                if (nodeToDelete != null)
+                {
+                    var parent = Parent(nodeToDelete.data);
+                    if (parent != null)
+                    {
+                        if (nodeToDelete.Left != null)
+                        {
+                            if (parent.data.CompareTo(nodeToDelete.data) > 0)
+                            {
+                                parent.Left = nodeToDelete.Left;
+                            }
+                            else
+                            {
+                                parent.Right = nodeToDelete.Left;
+                            }
+                        }
+                        else
+                        {
+                            if (parent.data.CompareTo(nodeToDelete.data) > 0)
+                            {
+                                parent.Left = nodeToDelete.Right;
+                            }
+                            else
+                            {
+                                parent.Right = nodeToDelete.Right;
+                            }
+                        }
+                    }
+
+                    if (nodeToDelete != current)
+                    {
+                        current.data = nodeToDelete.data;
+                    }
+                }
+            }
+        }
+
+        private BinarySearchTreeNode<T> Parent(T data)
+        {
+            if (data == null || Root == null)
+                return null;
 
             var current = Root;
             BinarySearchTreeNode<T> pre = null;
-
             while (current != null && current.data.CompareTo(data) != 0)
             {
                 pre = current;
@@ -270,24 +318,8 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 {
                     current = current.Right;
                 }
-                else
-                {
-                    break;
-                }
             }
 
-            if (pre != null && (pre.Left != null || pre.Right != null))
-            {
-                var accessor = FindAccessor(pre);
-            }
-
-
-        }
-
-
-
-        private object FindAccessor(BinarySearchTreeNode<T> pre)
-        {
             return pre;
         }
 

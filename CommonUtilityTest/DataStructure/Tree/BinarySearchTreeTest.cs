@@ -47,6 +47,81 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
         }
 
         [TestMethod]
+        public void DeleteTest()
+        {
+            //         9
+            //      3     11
+            //   2    6      13
+            // 1     5  7
+            //           8
+            var bst = CreateBinarySearchTree();
+            var output = new StringBuilder();
+
+            //         9
+            //      3     11
+            //   1    6      13
+            //       5  7
+            //           8
+            bst.Delete(2);
+            bst.PreOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("9 3 1 6 5 7 8 11 13 ", output.ToString());
+            output.Clear();
+            bst.InOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("1 3 5 6 7 8 9 11 13 ", output.ToString());
+
+            //         9
+            //      3     13
+            //   1    6      
+            //       5  7
+            //           8
+            bst.Delete(11);
+            output.Clear();
+            bst.PreOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("9 3 1 6 5 7 8 13 ", output.ToString());
+            output.Clear();
+            bst.InOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("1 3 5 6 7 8 9 13 ", output.ToString());
+           
+            //         9
+            //      3     13
+            //        6      
+            //       5  7
+            //           8
+            bst.Delete(1);
+            output.Clear();
+            bst.PreOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("9 3 6 5 7 8 13 ", output.ToString());
+            output.Clear();
+            bst.InOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("3 5 6 7 8 9 13 ", output.ToString());
+
+            //         9
+            //      3     13
+            //        7      
+            //       5  8
+            //           
+            bst.Delete(6);
+            output.Clear();
+            bst.PreOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("9 3 7 5 8 13 ", output.ToString());
+            output.Clear();
+            bst.InOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("3 5 7 8 9 13 ", output.ToString());
+
+            //         13
+            //      3     
+            //        7      
+            //       5  8
+            bst.Delete(9);
+            output.Clear();
+            bst.PreOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("13 3 7 5 8 ", output.ToString());
+            output.Clear();
+            bst.InOrderTraverse(data => output.Append(data + " "));
+            Assert.AreEqual("3 5 7 8 13 ", output.ToString());
+        }
+
+        [TestMethod]
         public void MinimumTest()
         {
             var bst = CreateBinarySearchTree();
