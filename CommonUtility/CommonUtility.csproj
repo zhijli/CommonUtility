@@ -52,6 +52,8 @@
     <Compile Include="DataStructure\List\DoublyLinkedList.cs" />
     <Compile Include="DataStructure\List\Node.cs" />
     <Compile Include="DataStructure\List\Queue.cs" />
+    <Compile Include="DataStructure\Tree\AvlTree.cs" />
+    <Compile Include="DataStructure\Tree\BinarySearchTree.cs" />
     <Compile Include="DataStructure\Tree\BinaryTree.cs" />
     <Compile Include="Logger\DbLogger.cs" />
     <Compile Include="Logger\Log4Net.cs" />

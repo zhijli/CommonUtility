@@ -60,7 +60,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         {
             var stack = new Stack<BinaryTreeNode<T>>();
             var current = Root;
-            
+
             while (current != null || stack.Count > 0)
             {
                 while (current != null)
@@ -76,14 +76,14 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                     current = stack.Pop();
                     action(current.data);
                     //go back to while loop again
-                    current = null; 
+                    current = null;
                 }
                 else
                 {
                     //Return from Left child
                     stack.Push(current);
                     //use null as a flag to indicate the next node in stack is return from right child
-                    stack.Push(null);  
+                    stack.Push(null);
                     current = current.Right;
                 }
             }
@@ -112,6 +112,11 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         {
             return base.Equals(obj);
         }
+
+        //public override string ToString()
+        //{
+            
+        //}
 
     }
 
