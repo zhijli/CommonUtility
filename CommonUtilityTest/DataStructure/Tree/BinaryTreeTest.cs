@@ -46,6 +46,13 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
             Assert.AreEqual("1 2 3 4 5 6 7 8 9 10 ", output.ToString());
         }
 
+        [TestMethod]
+        public void Get_Height_Test()
+        {
+            var tree = this.CreateBinaryTree();
+            Assert.AreEqual(5, tree.Height());
+        }
+
         private BinaryTree<int> CreateBinaryTree()
         {
             //         1

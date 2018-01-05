@@ -108,16 +108,48 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             }
         }
 
+        public int Height()
+        {
+            if (Root == null)
+                return 0;
+
+            var current = Root;
+            var queue = new Queue<BinaryTreeNode<T>>();
+            queue.Enqueue(current);
+            queue.Enqueue(null);
+            int height = 0;
+
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+                if (current != null)
+                {
+                    if (current.Left != null)
+                    {
+                        queue.Enqueue(current.Left);
+                    }
+                    if (current.Right != null)
+                    {
+                        queue.Enqueue(current.Right);
+                    }
+                }
+                else
+                {
+                    if (queue.Count > 0)
+                    {
+                        queue.Enqueue(null);
+                    }
+                    height++;
+                }
+            }
+
+            return height;
+        }
+
         public bool Equals(BinaryTree<T> obj)
         {
             return base.Equals(obj);
         }
-
-        //public override string ToString()
-        //{
-              
-        //}
-
     }
 
     public class BinaryTreeNode<T>
@@ -127,3 +159,6 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         public T data { get; set; }
     }
 }
+
+
+
