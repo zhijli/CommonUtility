@@ -22,9 +22,9 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             return node == null ? default(T) : node.data;
         }
 
-        public T Search(BinarySearchTreeNode<T> node)
+        private BinarySearchTreeNode<T> _Search(BinarySearchTreeNode<T> node)
         {
-            return node == null ? default(T) : Search(node.data);
+            return node == null ? null : _Search(node.data);
         }
 
         private BinarySearchTreeNode<T> _Search(T data)
@@ -50,10 +50,10 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
 
         public void Insert(T data)
         {
-            Insert(new BinarySearchTreeNode<T>() { data = data });
+            _Insert(new BinarySearchTreeNode<T>() { data = data });
         }
 
-        public void Insert(BinarySearchTreeNode<T> node)
+        private void _Insert(BinarySearchTreeNode<T> node)
         {
             if (node == null || node.data == null)
             {
@@ -90,12 +90,13 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             {
                 pre.Right = node;
             }
+            node.Parent = pre;
         }
 
 
-        public void Insert(ICollection<T> datas)
+        public void Insert(ICollection<T> dataCollection)
         {
-            foreach (var data in datas)
+            foreach (var data in dataCollection)
             {
                 Insert(data);
             }
@@ -258,45 +259,43 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             if (current != null)
             {
                 var nodeToDelete = current;
-                if (current != null && current.Left != null && current.Right != null)
+                if (current.ChildNum() == 2)
                 {
-                    nodeToDelete = _Successor(current);
+                    nodeToDelete = _Successor(current);  
+                    current.data = nodeToDelete.data;
                 }
 
-                if (nodeToDelete != null)
+                //nodeToDetele.ChildNum <= 1
+                if (nodeToDelete.Left != null)
                 {
-                    var parent = Parent(nodeToDelete.data);
-                    if (parent != null)
-                    {
-                        if (nodeToDelete.Left != null)
-                        {
-                            if (parent.data.CompareTo(nodeToDelete.data) > 0)
-                            {
-                                parent.Left = nodeToDelete.Left;
-                            }
-                            else
-                            {
-                                parent.Right = nodeToDelete.Left;
-                            }
-                        }
-                        else
-                        {
-                            if (parent.data.CompareTo(nodeToDelete.data) > 0)
-                            {
-                                parent.Left = nodeToDelete.Right;
-                            }
-                            else
-                            {
-                                parent.Right = nodeToDelete.Right;
-                            }
-                        }
-                    }
-
-                    if (nodeToDelete != current)
-                    {
-                        current.data = nodeToDelete.data;
-                    }
+                    _DeleteNode(nodeToDelete.Parent, nodeToDelete, nodeToDelete.Left);
                 }
+                else
+                {
+                    _DeleteNode(nodeToDelete.Parent, nodeToDelete, nodeToDelete.Right);
+                }
+            }
+        }
+
+        private void _DeleteNode(BinarySearchTreeNode<T> parent, BinarySearchTreeNode<T> current, BinarySearchTreeNode<T> son)
+        {
+            if (current.IsLeftChild())
+            {
+                current.Parent.Left = son;
+            }
+            else if (current.IsRightChild())
+            {
+                current.Parent.Right = son;
+            }
+            else
+            {
+                //current is the Root;
+                Root = son;
+            }
+
+            if (son != null)
+            {
+                son.Parent = parent;
             }
         }
 
@@ -336,6 +335,46 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 get { return (BinarySearchTreeNode<T>)base.Right; }
                 set { base.Right = value; }
             }
+
+            public BinarySearchTreeNode<T> Parent { get; set; }
+
+            /// <summary>
+            /// Return true if the node is its parent's left child
+            /// </summary>
+            /// <returns></returns>
+            public bool IsLeftChild()
+            {
+                return Parent != null && Parent.data.CompareTo(data) > 0;
+            }
+
+            /// <summary>
+            /// Return true if the node is its parrent's right child
+            /// </summary>
+            /// <returns></returns>
+            public bool IsRightChild()
+            {
+                return Parent != null && Parent.data != null && Parent.data.CompareTo(data) <= 0;
+            }
+
+            public bool IsLeaf()
+            {
+                return ChildNum() == 0;
+            }
+
+            /// <summary>
+            /// return how many child this node has. (0,1,2)
+            /// </summary>
+            /// <returns></returns>
+            public int ChildNum()
+            {
+                var childnum = 0;
+                if (Left != null)
+                    childnum++;
+                if (Right != null)
+                    childnum++;
+                return childnum;
+            }
+
         }
     }
 }
