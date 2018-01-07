@@ -48,12 +48,12 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             return current;
         }
 
-        public void Insert(T data)
+        public virtual void Insert(T data)
         {
             _Insert(new BinarySearchTreeNode<T>() { data = data });
         }
 
-        private void _Insert(BinarySearchTreeNode<T> node)
+        protected void _Insert(BinarySearchTreeNode<T> node)
         {
             if (node == null || node.data == null)
             {
@@ -94,7 +94,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         }
 
 
-        public void Insert(ICollection<T> dataCollection)
+        public virtual void Insert(ICollection<T> dataCollection)
         {
             foreach (var data in dataCollection)
             {
@@ -261,7 +261,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 var nodeToDelete = current;
                 if (current.ChildNum() == 2)
                 {
-                    nodeToDelete = _Successor(current);  
+                    nodeToDelete = _Successor(current);
                     current.data = nodeToDelete.data;
                 }
 
@@ -298,83 +298,69 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 son.Parent = parent;
             }
         }
+    }
 
-        private BinarySearchTreeNode<T> Parent(T data)
+    public class BinarySearchTreeNode<T> : BinaryTreeNode<T> where T : IComparable<T>
+    {
+        public new BinarySearchTreeNode<T> Left
         {
-            if (data == null || Root == null)
-                return null;
-
-            var current = Root;
-            BinarySearchTreeNode<T> pre = null;
-            while (current != null && current.data.CompareTo(data) != 0)
-            {
-                pre = current;
-                if (current.data.CompareTo(data) > 0)
-                {
-                    current = current.Left;
-                }
-                else if (current.data.CompareTo(data) < 0)
-                {
-                    current = current.Right;
-                }
-            }
-
-            return pre;
+            get { return (BinarySearchTreeNode<T>)base.Left; }
+            set { base.Left = value; }
         }
 
-        public class BinarySearchTreeNode<T> : BinaryTreeNode<T> where T : IComparable<T>
+        public new BinarySearchTreeNode<T> Right
         {
-            public new BinarySearchTreeNode<T> Left
-            {
-                get { return (BinarySearchTreeNode<T>)base.Left; }
-                set { base.Left = value; }
-            }
+            get { return (BinarySearchTreeNode<T>)base.Right; }
+            set { base.Right = value; }
+        }
 
-            public new BinarySearchTreeNode<T> Right
-            {
-                get { return (BinarySearchTreeNode<T>)base.Right; }
-                set { base.Right = value; }
-            }
+        public BinarySearchTreeNode<T> Parent { get; set; }
 
-            public BinarySearchTreeNode<T> Parent { get; set; }
+        /// <summary>
+        /// Return true if the node is its parent's left child
+        /// </summary>
+        /// <returns></returns>
+        public bool IsLeftChild()
+        {
+            return IsLeftChild(Parent);
+        }
 
-            /// <summary>
-            /// Return true if the node is its parent's left child
-            /// </summary>
-            /// <returns></returns>
-            public bool IsLeftChild()
-            {
-                return Parent != null && Parent.data.CompareTo(data) > 0;
-            }
+        public bool IsLeftChild(BinarySearchTreeNode<T> node)
+        {
+            return node != null && node.data.CompareTo(data) > 0;
+        }
 
-            /// <summary>
-            /// Return true if the node is its parrent's right child
-            /// </summary>
-            /// <returns></returns>
-            public bool IsRightChild()
-            {
-                return Parent != null && Parent.data != null && Parent.data.CompareTo(data) <= 0;
-            }
+        /// <summary>
+        /// Return true if the node is its parrent's right child
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRightChild()
+        {
+            return IsRightChild(Parent);
+        }
 
-            public bool IsLeaf()
-            {
-                return ChildNum() == 0;
-            }
+        public bool IsRightChild(BinarySearchTreeNode<T> node)
+        {
+            return node != null && node.data != null && node.data.CompareTo(data) <= 0;
+        }
 
-            /// <summary>
-            /// return how many child this node has. (0,1,2)
-            /// </summary>
-            /// <returns></returns>
-            public int ChildNum()
-            {
-                var childnum = 0;
-                if (Left != null)
-                    childnum++;
-                if (Right != null)
-                    childnum++;
-                return childnum;
-            }
+        public bool IsLeaf()
+        {
+            return ChildNum() == 0;
+        }
 
+        /// <summary>
+        /// return how many child this node has. (0,1,2)
+        /// </summary>
+        /// <returns></returns>
+        public int ChildNum()
+        {
+            var childnum = 0;
+            if (Left != null)
+                childnum++;
+            if (Right != null)
+                childnum++;
+            return childnum;
         }
     }
 }
