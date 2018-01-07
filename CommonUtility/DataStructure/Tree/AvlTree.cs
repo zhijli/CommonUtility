@@ -20,14 +20,6 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             _Insert(new AvlTreeNode<T>() { data = data });
         }
 
-        public override void Insert(ICollection<T> dataCollection)
-        {
-            foreach (var data in dataCollection)
-            {
-                Insert(data);
-            }
-        }
-
         private void _Insert(AvlTreeNode<T> node)
         {
             if (node == null)
@@ -162,7 +154,40 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             node.UpdateHeight();
         }
 
-        public void Delete(T data) { }
+        public void Delete(T data)
+        {
+           var nodeToDelete = (AvlTreeNode<T>) base._Delete(new AvlTreeNode<T>() {data = data});
+
+            var current = nodeToDelete.Parent;
+
+            while (current != null)
+            {
+                current.UpdateHeight();
+
+                if (!current.IsBallance())
+                {
+                    if (nodeToDelete.IsLeftChild(current))
+                    {
+                        if (current.Right.Right == null)
+                        {
+                            RightRotate(current.Right.Left, current.Right);
+                        }
+
+                        LeftRotate(current.Right,current);
+                    }
+                    else
+                    {
+                        if (current.Left.Left == null)
+                        {
+                            LeftRotate(current.Left.Right, current.Left);
+                        }
+                        RightRotate(current.Left, current);
+                    }
+                }
+
+                current = current.Parent;
+            }
+        }
     }
 
     public class AvlTreeNode<T> : BinarySearchTreeNode<T> where T : IComparable<T>

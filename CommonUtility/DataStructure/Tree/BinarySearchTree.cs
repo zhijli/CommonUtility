@@ -255,10 +255,21 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 return;
             }
 
-            var current = _Search(data);
+            _Delete(new BinarySearchTreeNode<T>() {data = data});
+        }
+
+        protected BinarySearchTreeNode<T> _Delete(BinarySearchTreeNode<T> node)
+        {
+            if (node == null || Root == null)
+            {
+                return null;
+            }
+
+            var current = _Search(node.data);
+            var nodeToDelete = current;
             if (current != null)
             {
-                var nodeToDelete = current;
+                nodeToDelete = current;
                 if (current.ChildNum() == 2)
                 {
                     nodeToDelete = _Successor(current);
@@ -275,6 +286,8 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                     _DeleteNode(nodeToDelete.Parent, nodeToDelete, nodeToDelete.Right);
                 }
             }
+
+            return nodeToDelete;
         }
 
         private void _DeleteNode(BinarySearchTreeNode<T> parent, BinarySearchTreeNode<T> current, BinarySearchTreeNode<T> son)

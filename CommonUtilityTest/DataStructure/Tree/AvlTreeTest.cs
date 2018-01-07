@@ -21,5 +21,20 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
 
             Assert.IsTrue(avlTree.Root.IsBallance());
         }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var avlTree = new AvlTree<int>();
+
+            var list = new List<int>() { 1, 2, 3, 5, 6, 7, 8, 9, 11, 13 };
+            avlTree.Insert(list);
+
+            avlTree.Delete(5);
+            avlTree.Delete(2);
+            avlTree.Delete(1);
+            avlTree.Delete(3);
+            Assert.IsTrue(avlTree.Root.IsBallance());
+        }
     }
 }
