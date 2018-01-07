@@ -55,6 +55,7 @@
     <Compile Include="DataStructure\Tree\AvlTree.cs" />
     <Compile Include="DataStructure\Tree\BinarySearchTree.cs" />
     <Compile Include="DataStructure\Tree\BinaryTree.cs" />
+    <Compile Include="DataStructure\Tree\RedBlackTree.cs" />
     <Compile Include="Logger\DbLogger.cs" />
     <Compile Include="Logger\Log4Net.cs" />
     <Compile Include="Logger\EventLogger.cs" />
