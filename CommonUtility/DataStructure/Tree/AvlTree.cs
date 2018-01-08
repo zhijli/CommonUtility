@@ -32,7 +32,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             while (current != null)
             {
                 current.UpdateHeight();
-
+                var parrent = current.Parent;
                 if (!current.IsBallance())
                 {
                     if (node.IsLeftChild(current))
@@ -45,7 +45,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                         RightRotate(current.Left, current);
 
                     }
-                    if (node.IsRightChild(current))
+                    else if (node.IsRightChild(current))
                     {
                         if (node.IsLeftChild(current.Right))
                         {
@@ -55,11 +55,9 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                         LeftRotate(current.Right, current);
 
                     }
-
-                    break;
                 }
 
-                current = current.Parent;
+                current = parrent;
             }
         }
 
@@ -122,7 +120,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         private void RightRotate(AvlTreeNode<T> node, AvlTreeNode<T> parent)
         {
             var grandParent = parent.Parent;
-            var son = node.Left;
+            var son = node.Right;
 
             if (grandParent == null)
             {
@@ -154,7 +152,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             node.UpdateHeight();
         }
 
-        public void Delete(T data)
+        public override void Delete(T data)
         {
            var nodeToDelete = (AvlTreeNode<T>) base._Delete(new AvlTreeNode<T>() {data = data});
 
@@ -186,6 +184,21 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 }
 
                 current = current.Parent;
+            }
+        }
+
+        public bool IsBallance()
+        {
+            return this._IsBallance(Root);
+        }
+
+        protected bool _IsBallance(AvlTreeNode<T> node)
+        {
+            if (node == null)
+                return true;
+            else
+            {
+                return node.IsBallance() && _IsBallance(node.Left) && _IsBallance(node.Right);
             }
         }
     }
@@ -226,6 +239,11 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             int rightChildHeight = Right == null ? 0 : Right.Height;
 
             return Math.Abs(leftChildHeight - rightChildHeight) <= 1;
+        }
+
+        public override bool IsValid()
+        {
+            return this.IsBallance() && base.IsValid();
         }
     }
 }

@@ -50,9 +50,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DataStructure\Tree\AvlTreeExtension.cs" />
+    <Compile Include="DataStructure\Tree\BinarySearchTreeExtension.cs" />
     <Compile Include="DataStructure\Tree\BinaryTreeExtensionTest.cs" />
     <Compile Include="DataStructure\Tree\BinaryTreeExtension.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="DataStructure\Tree\RedBlackTreeExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

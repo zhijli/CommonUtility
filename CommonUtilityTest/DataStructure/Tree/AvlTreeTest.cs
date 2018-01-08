@@ -8,6 +8,8 @@ using ZhijieLi.CommonUtility.DataStructure.Tree;
 
 namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
 {
+    using ZhijieLi.JustDoIt.DataStructure.Tree;
+
     [TestClass]
     public class AvlTreeTest
     {
@@ -16,10 +18,14 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
         {
             var avlTree = new AvlTree<int>();
 
-            var list = new List<int>() { 1, 2, 3, 5, 6, 7, 8, 9, 11, 13 };
-            avlTree.Insert(list);
-
-            Assert.IsTrue(avlTree.Root.IsBallance());
+            var list = new List<int>() { 1, 2, 13, 5, 6, 11, 8, 9, 3, 7 };
+            foreach (var item in list)
+            {
+                Console.WriteLine("Insert {0} to tree" , item);
+                avlTree.Insert(item);
+                Assert.IsTrue(avlTree.IsValid());
+                Console.WriteLine("Tree is valid");
+            }
         }
 
         [TestMethod]
@@ -27,14 +33,16 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
         {
             var avlTree = new AvlTree<int>();
 
-            var list = new List<int>() { 1, 2, 3, 5, 6, 7, 8, 9, 11, 13 };
+            var list = new List<int>() { 1, 2, 13, 5, 6, 11, 8, 9, 3, 7 };
             avlTree.Insert(list);
-
-            avlTree.Delete(5);
-            avlTree.Delete(2);
-            avlTree.Delete(1);
-            avlTree.Delete(3);
-            Assert.IsTrue(avlTree.Root.IsBallance());
+            var deleteList = new List<int>() { 6, 2, 13, 7, 5, 11, 8, 9, 3, 1 };
+            foreach (var item in deleteList)
+            {
+                Console.WriteLine("Delete {0} from tree", item);
+                avlTree.Delete(item);
+                Assert.IsTrue(avlTree.IsValid());
+                Console.WriteLine("Tree is valid");
+            }
         }
     }
 }

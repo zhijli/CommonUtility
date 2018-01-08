@@ -22,12 +22,12 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             return node == null ? default(T) : node.data;
         }
 
-        private BinarySearchTreeNode<T> _Search(BinarySearchTreeNode<T> node)
+        protected BinarySearchTreeNode<T> _Search(BinarySearchTreeNode<T> node)
         {
             return node == null ? null : _Search(node.data);
         }
 
-        private BinarySearchTreeNode<T> _Search(T data)
+        protected BinarySearchTreeNode<T> _Search(T data)
         {
             if (data == null || Root == null)
                 return null;
@@ -178,7 +178,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         }
 
 
-        private BinarySearchTreeNode<T> _Successor(BinarySearchTreeNode<T> node)
+        protected BinarySearchTreeNode<T> _Successor(BinarySearchTreeNode<T> node)
         {
             if (Root == null && node == null)
                 return null;
@@ -217,7 +217,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         }
 
 
-        private BinarySearchTreeNode<T> _Predecessor(BinarySearchTreeNode<T> node)
+        protected BinarySearchTreeNode<T> _Predecessor(BinarySearchTreeNode<T> node)
         {
             if (Root == null && node == null)
                 return null;
@@ -248,7 +248,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             }
         }
 
-        public void Delete(T data)
+        public virtual void Delete(T data)
         {
             if (data == null || Root == null)
             {
@@ -290,7 +290,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             return nodeToDelete;
         }
 
-        private void _DeleteNode(BinarySearchTreeNode<T> parent, BinarySearchTreeNode<T> current, BinarySearchTreeNode<T> son)
+        protected void _DeleteNode(BinarySearchTreeNode<T> parent, BinarySearchTreeNode<T> current, BinarySearchTreeNode<T> son)
         {
             if (current.IsLeftChild())
             {
@@ -374,6 +374,14 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             if (Right != null)
                 childnum++;
             return childnum;
+        }
+
+        public virtual bool IsValid()
+        {
+            bool leftValid = (this.Left == null || this.data.CompareTo(this.Left.data) > 0);
+            bool rightValid = (this.Right == null || this.data.CompareTo(this.Right.data) <= 0);
+
+            return leftValid && rightValid;
         }
     }
 }

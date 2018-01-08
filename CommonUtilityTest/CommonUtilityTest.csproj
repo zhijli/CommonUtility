@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ZhijieLi.CommonUtilityTest</RootNamespace>
     <AssemblyName>ZhijieLi.CommonUtilityTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,6 +68,10 @@
     <ProjectReference Include="..\CommonUtility\CommonUtility.csproj">
       <Project>{1ba74a7d-9b40-48e4-a408-030a8c5ce259}</Project>
       <Name>CommonUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JustDoIt\JustDoIt.csproj">
+      <Project>{d80a21ee-de3d-481f-86d4-80f561f686ee}</Project>
+      <Name>JustDoIt</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

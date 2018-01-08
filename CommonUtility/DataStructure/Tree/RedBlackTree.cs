@@ -158,6 +158,140 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                 son.Parent = parent;
             }
         }
+
+        public void Delete(T data)
+        {
+            _Delete(new RedBlackTreeNode<T>() { data = data });
+        }
+
+        private RedBlackTreeNode<T> _Delete(RedBlackTreeNode<T> node)
+        {
+            if (node == null || Root == null)
+            {
+                return null;
+            }
+
+            //Todo: try to reuse the base._Delete. Now the isLeftChild information is lost when use base._Delete
+            var current = (RedBlackTreeNode<T>)base._Search(node.data);
+            var nodeToDelete = current;
+            bool isLeftChild = true;
+            if (current != null)
+            {
+                nodeToDelete = current;
+                isLeftChild = nodeToDelete.IsLeftChild();
+                if (current.ChildNum() == 2)
+                {
+                    nodeToDelete = (RedBlackTreeNode<T>)base._Successor(current);
+                    isLeftChild = nodeToDelete.IsLeftChild();
+                    current.data = nodeToDelete.data;
+                }
+
+                //nodeToDetele.ChildNum <= 1
+                if (nodeToDelete.Left != null)
+                {
+                    base._DeleteNode(nodeToDelete.Parent, nodeToDelete, nodeToDelete.Left);
+                }
+                else
+                {
+                    base._DeleteNode(nodeToDelete.Parent, nodeToDelete, nodeToDelete.Right);
+                }
+            }
+
+            if (nodeToDelete != null && nodeToDelete.IsRed != true)
+            {
+                var parent = nodeToDelete.Parent;
+
+                if (nodeToDelete.Left != null)
+                {
+                    current = nodeToDelete.Left;
+                }
+                else
+                {
+                    current = nodeToDelete.Right;
+                }
+
+                while (current != Root && (current == null || current != null && current.IsRed == false))
+                {
+                    if (isLeftChild)
+                    {
+                        var brother = parent.Right;
+                        if (brother != null && brother.IsRed)
+                        {
+                            LeftRotate(brother, parent);
+                            brother.IsRed = false;
+                            parent.IsRed = true;
+                            brother = parent.Right;
+                        }
+
+                        if ((brother.Right == null || (brother.Right != null && brother.Right.IsRed == false)) &&
+                            (brother.Left == null || (brother.Left != null && brother.Left.IsRed == false)))
+                        {
+                            brother.IsRed = true;
+                            current = parent;
+                            parent = current.Parent;
+                        }
+                        else
+                        {
+                            var brotherLeftChild = brother.Left;
+                            if (brother.Right == null || (brother.Right != null && brother.Right.IsRed == false))
+                            {
+                                RightRotate(brotherLeftChild, brother);
+                                brotherLeftChild.IsRed = false;
+                                brother.IsRed = true;
+                                brother = brotherLeftChild;
+                            }
+
+                            LeftRotate(brother, parent);
+                            brother.Right.IsRed = false;
+                            brother.IsRed = parent.IsRed;
+                            parent.IsRed = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        var brother = parent.Left;
+                        if (brother != null && brother.IsRed)
+                        {
+                            RightRotate(brother, parent);
+                            brother.IsRed = false;
+                            parent.IsRed = true;
+                            brother = parent.Left;
+                        }
+
+                        if ((brother.Left == null || (brother.Left != null && brother.Left.IsRed == false)) &&
+                            (brother.Right == null || (brother.Right != null && brother.Right.IsRed == false)))
+                        {
+                            brother.IsRed = true;
+                            current = parent;
+                            parent = current.Parent;
+                        }
+                        else
+                        {
+                            var brotherRightChild = brother.Right;
+                            if (brother.Left == null || (brother.Left != null && brother.Left.IsRed == false))
+                            {
+                                LeftRotate(brotherRightChild, brother);
+                                brotherRightChild.IsRed = false;
+                                brother.IsRed = true;
+                                brother = brotherRightChild;
+                            }
+
+                            RightRotate(brother, parent);
+                            brother.Left.IsRed = false;
+                            brother.IsRed = parent.IsRed;
+                            parent.IsRed = false;
+                            break;
+                        }
+                    }
+                }
+                if (current != null)
+                {
+                    current.IsRed = false;
+                }
+            }
+            return nodeToDelete;
+        }
     }
 
     public class RedBlackTreeNode<T> : BinarySearchTreeNode<T> where T : IComparable<T>
