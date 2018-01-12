@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace ZhijieLi.CommonUtility.DataStructure.Tree
 {
+    using System.Runtime.Remoting.Metadata.W3cXsd2001;
+
     public class AvlTree<T> : BinarySearchTree<T> where T : IComparable<T>
     {
         public new AvlTreeNode<T> Root
@@ -39,20 +41,20 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                     {
                         if (node.IsRightChild(current.Left))
                         {
-                            LeftRotate(current.Left.Right, current.Left);
+                            LeftRotate(current.Left);
                         }
 
-                        RightRotate(current.Left, current);
+                        RightRotate(current);
 
                     }
                     else if (node.IsRightChild(current))
                     {
                         if (node.IsLeftChild(current.Right))
                         {
-                            RightRotate(current.Right.Left, current.Right);
+                            RightRotate(current.Right);
                         }
 
-                        LeftRotate(current.Right, current);
+                        LeftRotate(current);
 
                     }
                 }
@@ -62,7 +64,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         }
 
         /// <summary>
-        /// LeftRotate(B, B.parent) 
+        /// LeftRotate(A) 
         ///                 
         ///     A                 B                      
         ///   /   \             /   \                 
@@ -71,90 +73,98 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
         ///      y   z       x   y                   
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="parent"></param>
-        private void LeftRotate(AvlTreeNode<T> node, AvlTreeNode<T> parent)
+        private void LeftRotate(AvlTreeNode<T> node)
         {
-            var grandParent = parent.Parent;
-            var son = node.Left;
-
-            if (grandParent == null)
+            var pivot = node.Right;
+            if (pivot == null)
             {
-                Root = node;
+                throw new ArgumentException("Cannot perform LeftRotate for current node since its right child is null.");
+            }
+            var parent = node.Parent;
+            var grandSon = pivot.Left;
+
+            if (parent == null)
+            {
+                Root = pivot;
             }
             else
             {
-                if (parent.IsLeftChild())
+                if (node.IsLeftChild())
                 {
-                    grandParent.Left = node;
+                    parent.Left = pivot;
                 }
                 else
                 {
-                    grandParent.Right = node;
+                    parent.Right = pivot;
                 }
             }
-            node.Parent = grandParent;
-            if (son != null)
-            {
-                son.Parent = parent;
-            }
-            node.Left = parent;
-            parent.Parent = node;
-            parent.Right = son;
 
-            parent.UpdateHeight();
+            node.Parent = pivot;
+            node.Right = grandSon;
+            pivot.Parent = parent;
+            pivot.Left = node;
+            if (grandSon != null)
+            {
+                grandSon.Parent = node;
+            }
+
             node.UpdateHeight();
+            pivot.UpdateHeight();
         }
 
 
         /// <summary>
-        /// RightRotate(A, A.parent) 
+        /// RightRotate(A) 
         ///                 
-        ///              B                       A        
+        ///              A                       B        
         ///            /   \                   /   \
-        ///           A     z      ->         x     B 
+        ///           B     z      ->         x     A 
         ///         /   \                          / \
         ///        x     y                        y   z
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="parent"></param>
-        private void RightRotate(AvlTreeNode<T> node, AvlTreeNode<T> parent)
+        private void RightRotate(AvlTreeNode<T> node)
         {
-            var grandParent = parent.Parent;
-            var son = node.Right;
-
-            if (grandParent == null)
+            var pivot = node.Left;
+            if (pivot == null)
             {
-                Root = node;
+                throw new ArgumentException("Cannot perform RightRotate for current node since its left child is null.");
+            }
+            var parent = node.Parent;
+            var grandson = pivot.Right;
+
+            if (parent == null)
+            {
+                Root = pivot;
             }
             else
             {
-                if (parent.IsLeftChild())
+                if (node.IsLeftChild())
                 {
-                    grandParent.Left = node;
+                    parent.Left = pivot;
                 }
                 else
                 {
-                    grandParent.Right = node;
+                    parent.Right = pivot;
                 }
-
             }
-            node.Parent = grandParent;
-            if (son != null)
+
+            node.Parent = pivot;
+            node.Left = grandson;
+            pivot.Parent = parent;
+            pivot.Right = node;
+            if (grandson != null)
             {
-                son.Parent = parent;
+                grandson.Parent = node;
             }
-            node.Right = parent;
-            parent.Parent = node;
-            parent.Left = son;
-            
 
-            parent.UpdateHeight();
             node.UpdateHeight();
+            pivot.UpdateHeight();
         }
 
         public override void Delete(T data)
         {
-           var nodeToDelete = (AvlTreeNode<T>) base._Delete(new AvlTreeNode<T>() {data = data});
+            var nodeToDelete = (AvlTreeNode<T>)base._Delete(new AvlTreeNode<T>() { data = data });
 
             var current = nodeToDelete.Parent;
 
@@ -168,18 +178,18 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                     {
                         if (current.Right.Right == null)
                         {
-                            RightRotate(current.Right.Left, current.Right);
+                            RightRotate(current.Right);
                         }
 
-                        LeftRotate(current.Right,current);
+                        LeftRotate(current);
                     }
                     else
                     {
                         if (current.Left.Left == null)
                         {
-                            LeftRotate(current.Left.Right, current.Left);
+                            LeftRotate(current.Left);
                         }
-                        RightRotate(current.Left, current);
+                        RightRotate(current);
                     }
                 }
 

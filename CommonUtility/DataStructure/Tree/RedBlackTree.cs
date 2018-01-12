@@ -60,10 +60,10 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                         {
                             if (current.IsRightChild((current.Parent)))
                             {
-                                LeftRotate(current, current.Parent);
+                                LeftRotate(current.Parent);
                             }
 
-                            RightRotate(grandParent.Left, grandParent);
+                            RightRotate(grandParent);
                             grandParent.IsRed = true;
                             grandParent.Parent.IsRed = false;
                             break;
@@ -82,10 +82,10 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                         {
                             if (current.IsLeftChild(current.Parent))
                             {
-                                RightRotate(current, current.Parent);
+                                RightRotate(current.Parent);
                             }
 
-                            LeftRotate(grandParent.Right, grandParent);
+                            LeftRotate(grandParent);
                             grandParent.IsRed = true;
                             grandParent.Parent.IsRed = false;
                             break;
@@ -95,67 +95,96 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
             }
         }
 
-        private void RightRotate(RedBlackTreeNode<T> node, RedBlackTreeNode<T> parent)
+        /// <summary>
+        /// LeftRotate(A) 
+        ///                 
+        ///     A                 B                      
+        ///   /   \             /   \                 
+        ///  x     B     ->    A     z              
+        ///       / \         / \                    
+        ///      y   z       x   y                   
+        /// </summary>
+        /// <param name="node"></param>
+        private void LeftRotate(RedBlackTreeNode<T> node)
         {
-            var grandParent = parent.Parent;
-            var son = node.Right;
-
-            if (grandParent == null)
+            var pivot = node.Right;
+            if (pivot == null)
             {
-                Root = node;
+                throw new ArgumentException("Cannot perform LeftRotate for current node since its right child is null.");
+            }
+            var parent = node.Parent;
+            var grandSon = pivot.Left;
+
+            if (parent == null)
+            {
+                Root = pivot;
             }
             else
             {
-                if (parent.IsLeftChild(grandParent))
+                if (node.IsLeftChild())
                 {
-                    grandParent.Left = node;
+                    parent.Left = pivot;
                 }
                 else
                 {
-                    grandParent.Right = node;
+                    parent.Right = pivot;
                 }
             }
 
-            node.Parent = grandParent;
-            node.Right = parent;
-            parent.Left = son;
-            parent.Parent = node;
-
-            if (son != null)
+            node.Parent = pivot;
+            node.Right = grandSon;
+            pivot.Parent = parent;
+            pivot.Left = node;
+            if (grandSon != null)
             {
-                son.Parent = parent;
+                grandSon.Parent = node;
             }
         }
 
-        private void LeftRotate(RedBlackTreeNode<T> node, RedBlackTreeNode<T> parent)
-        {
-            var grandParent = parent.Parent;
-            var son = node.Left;
 
-            if (grandParent == null)
+        /// <summary>
+        /// RightRotate(A) 
+        ///                 
+        ///              A                       B        
+        ///            /   \                   /   \
+        ///           B     z      ->         x     A 
+        ///         /   \                          / \
+        ///        x     y                        y   z
+        /// </summary>
+        /// <param name="node"></param>
+        private void RightRotate(RedBlackTreeNode<T> node)
+        {
+            var pivot = node.Left;
+            if (pivot == null)
             {
-                Root = node;
+                throw new ArgumentException("Cannot perform RightRotate for current node since its left child is null.");
+            }
+            var parent = node.Parent;
+            var grandson = pivot.Right;
+
+            if (parent == null)
+            {
+                Root = pivot;
             }
             else
             {
-                if (parent.IsLeftChild(grandParent))
+                if (node.IsLeftChild())
                 {
-                    grandParent.Left = node;
+                    parent.Left = pivot;
                 }
                 else
                 {
-                    grandParent.Right = node;
+                    parent.Right = pivot;
                 }
             }
 
-            node.Parent = grandParent;
-            node.Left = parent;
-            parent.Right = son;
-            parent.Parent = node;
-
-            if (son != null)
+            node.Parent = pivot;
+            node.Left = grandson;
+            pivot.Parent = parent;
+            pivot.Right = node;
+            if (grandson != null)
             {
-                son.Parent = parent;
+                grandson.Parent = node;
             }
         }
 
@@ -217,7 +246,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                         var brother = parent.Right;
                         if (brother != null && brother.IsRed)
                         {
-                            LeftRotate(brother, parent);
+                            LeftRotate(parent);
                             brother.IsRed = false;
                             parent.IsRed = true;
                             brother = parent.Right;
@@ -235,13 +264,13 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                             var brotherLeftChild = brother.Left;
                             if (brother.Right == null || (brother.Right != null && brother.Right.IsRed == false))
                             {
-                                RightRotate(brotherLeftChild, brother);
+                                RightRotate(brother);
                                 brotherLeftChild.IsRed = false;
                                 brother.IsRed = true;
                                 brother = brotherLeftChild;
                             }
 
-                            LeftRotate(brother, parent);
+                            LeftRotate(parent);
                             brother.Right.IsRed = false;
                             brother.IsRed = parent.IsRed;
                             parent.IsRed = false;
@@ -253,7 +282,7 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                         var brother = parent.Left;
                         if (brother != null && brother.IsRed)
                         {
-                            RightRotate(brother, parent);
+                            RightRotate(parent);
                             brother.IsRed = false;
                             parent.IsRed = true;
                             brother = parent.Left;
@@ -271,13 +300,13 @@ namespace ZhijieLi.CommonUtility.DataStructure.Tree
                             var brotherRightChild = brother.Right;
                             if (brother.Left == null || (brother.Left != null && brother.Left.IsRed == false))
                             {
-                                LeftRotate(brotherRightChild, brother);
+                                LeftRotate(brother);
                                 brotherRightChild.IsRed = false;
                                 brother.IsRed = true;
                                 brother = brotherRightChild;
                             }
 
-                            RightRotate(brother, parent);
+                            RightRotate(parent);
                             brother.Left.IsRed = false;
                             brother.IsRed = parent.IsRed;
                             parent.IsRed = false;

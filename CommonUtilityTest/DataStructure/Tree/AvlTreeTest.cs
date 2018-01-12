@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ZhijieLi.CommonUtility.DataStructure.Tree;
-
-namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
+﻿namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using ZhijieLi.CommonUtility.DataStructure.Tree;
     using ZhijieLi.JustDoIt.DataStructure.Tree;
 
     [TestClass]
@@ -21,9 +20,9 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
             var list = new List<int>() { 1, 2, 13, 5, 6, 11, 8, 9, 3, 7 };
             foreach (var item in list)
             {
-                Console.WriteLine("Insert {0} to tree" , item);
+                Console.WriteLine("Insert {0} to tree", item);
                 avlTree.Insert(item);
-                Assert.IsTrue(avlTree.IsValid());
+                Assert.IsTrue(AvlTreeValidation(avlTree));
                 Console.WriteLine("Tree is valid");
             }
         }
@@ -40,8 +39,28 @@ namespace ZhijieLi.CommonUtilityTest.DataStructure.Tree
             {
                 Console.WriteLine("Delete {0} from tree", item);
                 avlTree.Delete(item);
-                Assert.IsTrue(avlTree.IsValid());
+                Assert.IsTrue(AvlTreeValidation(avlTree));
                 Console.WriteLine("Tree is valid");
+            }
+        }
+
+        public bool AvlTreeValidation<T>(AvlTree<T> tree) where T : IComparable<T>
+        {
+            if (tree == null)
+                return true;
+
+            return _AvlTreeValidation(tree.Root);
+        }
+
+        private bool _AvlTreeValidation<T>(AvlTreeNode<T> node) where T : IComparable<T>
+        {
+            if (node == null)
+            {
+                return true;
+            }
+            else
+            {
+                return node.IsValid() && _AvlTreeValidation<T>(node.Left) && _AvlTreeValidation<T>(node.Right);
             }
         }
     }
